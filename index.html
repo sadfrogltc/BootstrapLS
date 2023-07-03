@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Litecoin.Studio  | Art</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet" >
+    <link rel="icon" href="graphics\LS.png">
+    <script type="text/javascript" src="qrcode.js"></script>
+  </head>
+  <body>
+<!--header -->
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">Litecoin.Studio   <img src='graphics/LS.png' style="width:45px" alt="..."></a>
+
+
+      <span id="username-display"></span><button class="btn" onclick="location.reload()"><img src="graphics/LWLA.png" class="mx-3 rounded shadow-lg " style="width:40px"></button>
+
+  </div>
+</nav>
+
+<!-- Nav Tabs -->
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" onclick="hideId('nav-about')">Home</button>
+    <button class="nav-link menuelement" id="nav-wallet-tab" data-bs-toggle="tab" data-bs-target="#nav-wallet" type="button" role="tab" aria-controls="nav-wallet" aria-selected="true" onclick="hideId('nav-about')">Wallet</button>
+    <button class="nav-link" id="nav-art-tab" data-bs-toggle="tab" data-bs-target="#nav-art" type="button" role="tab" aria-controls="nav-art" aria-selected="false" onclick="hideId('nav-about');" data-art-tab>Art</button>
+    <button class="nav-link" id="nav-market-tab" data-bs-toggle="tab" data-bs-target="#nav-market" type="button" role="tab" aria-controls="nav-market" aria-selected="false" onclick="hideId('nav-about');">Market</button>
+    <button class="nav-link" id="nav-create-tab" data-bs-toggle="tab" data-bs-target="#nav-create" type="button" role="tab" aria-controls="nav-create" aria-selected="false" disabled>Create</button>
+    <button class="nav-link align-items-end" id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about" type="button" role="tab" aria-controls="nav-about" aria-selected="false" onclick="showId('nav-about')">About</button>
+
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+
+<!-- Home -->
+<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+
+  <hr>
+  <h3 class="mx-3 mt-3  d-none d-lg-block">Featured</h3>
+  <div class="row p-3 mx-5 d-none d-lg-block bg-dark" style="border: solid lightgrey;border-radius:16px;box-shadow:-10px 10px 10px grey">
+
+          <div class="col-auto">
+          <div id="carouselExampleCaptions" class=" carousel carousel-dark slide ml-5">
+            <div class="carousel-indicators" style="bottom:-40px">
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner" style="max-height:400px;min-height:100px">
+              <div class="carousel-item active" >
+                <div class="row justify-content-center">
+                  <div class="card-group mx-5 h-25 w-75">
+
+                    <div class="card  mx-5 bg-dark">
+                      <img src='featuredArt\Pinkflower_LitecoinStudio.jpg' class="card-img-top rounded" alt="...">
+                      <!-- <div class="card-body">
+                        <h5 class="card-title">Digital Art</h5>
+
+                      </div> -->
+                    </div>
+                    <div class="card  mx-5 bg-dark">
+                      <img src='featuredArt\wideWorldStreetView.jpg' class="card-img-top rounded" alt="...">
+                      <!-- <div class="card-body">
+                        <h5 class="card-title">Photography</h5>
+
+                      </div> -->
+                    </div>
+                    <div class="card  mx-5 bg-dark">
+                      <img src='featuredArt\flowerPatternOrd.jpg' class="card-img-top rounded" alt="...">
+                      <!-- <div class="card-body">
+                        <h5 class="card-title">Collections</h5>
+
+                      </div> -->
+                    </div>
+
+
+                    </div>
+                </div>
+                <div class="col">
+                </div>
+                </div>
+                <div class="carousel-item" >
+                  <div class="row justify-content-center">
+                    <div class="card-group mx-5 h-25 w-75">
+
+                      <div class="card  mx-5 bg-dark">
+                        <img src='featuredArt\Pinkflower_LitecoinStudio.jpg' class="card-img-top rounded" alt="...">
+                        <!-- <div class="card-body">
+                          <h5 class="card-title">Digital Art</h5>
+
+                        </div> -->
+                      </div>
+                      <div class="card  mx-5 bg-dark">
+                        <img src='featuredArt\flowerPatternOrd.jpg' class="card-img-top rounded" alt="...">
+                        <!-- <div class="card-body">
+                          <h5 class="card-title">Collections</h5>
+
+                        </div> -->
+                      </div>
+                      <div class="card  mx-5 bg-dark">
+                        <img src='featuredArt\wideWorldStreetView.jpg' class="card-img-top rounded" alt="...">
+                        <!-- <div class="card-body">
+                          <h5 class="card-title">Photography</h5>
+
+                        </div> -->
+                      </div>
+
+
+
+                      </div>
+                  </div>
+                  <div class="col">
+                  </div>
+                  </div>
+                  <div class="carousel-item" >
+                    <div class="row justify-content-center">
+                      <div class="card-group mx-5 h-25 w-75">
+
+
+                        <div class="card  mx-5 bg-dark">
+                          <img src='featuredArt\wideWorldStreetView.jpg' class="card-img-top rounded" alt="...">
+                          <!-- <div class="card-body">
+                            <h5 class="card-title">Photography</h5>
+
+                          </div> -->
+                        </div>
+                        <div class="card  mx-5 bg-dark">
+                          <img src='featuredArt\flowerPatternOrd.jpg' class="card-img-top rounded" alt="...">
+                          <!-- <div class="card-body">
+                            <h5 class="card-title">Collections</h5>
+
+                          </div> -->
+                        </div>
+                        <div class="card  mx-5 bg-dark">
+                          <img src='featuredArt\Pinkflower_LitecoinStudio.jpg' class="card-img-top rounded" alt="...">
+                          <!-- <div class="card-body">
+                            <h5 class="card-title">Digital Art</h5>
+
+                          </div> -->
+                        </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col">
+                    </div>
+                    </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bg-primary border border-primary rounded" style="box-shadow:10px 10px 10px grey" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon bg-primary rounded" aria-hidden="true" style="box-shadow:10px 10px 10px grey"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          </div><!--column end-->
+      </div><!--row end-->
+    <hr>
+
+    <!--Explore -->
+
+    <h3 class="mx-3 mt-3">Explore</h3>
+    <div class="row text-center">
+
+      <div class="col-1">
+        </div>
+          <div class="col-auto">
+    <div class="card-group mx-5 h-50">
+
+      <div class="card">
+        <img src='featuredArt\Pinkflower_LitecoinStudio.jpg' class="card-img-top rounded" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Digital Art</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+      <div class="card">
+        <img src='featuredArt\wideWorldStreetView.jpg' class="card-img-top rounded" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Photography</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+      <div class="card">
+        <img src='graphics/LS.png' class="card-img-top rounded" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Collections</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+
+
+      </div>
+      </div> <!--end col-->
+      <div class="col-2">
+        </div>
+      </div> <!--end row-->
+
+    <hr>
+    <!--details -->
+    <div class="row text-white mx-5 rounded pb-3" style="background:lightgrey; box-shadow:0px 10px 10px grey">
+
+      <div class="col-lg">
+        <h4 class="mt-3 mx-3">Announcements</h4><hr>
+        <p class="mx-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+        </div>
+
+        <div class="col-lg">
+          <h4 class="mt-3 mx-3">Become a Creator</h4>
+          <hr>
+          <p class="mx-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+
+          </div>
+          <div class="col-sm">
+            <button class="btn btn-lg btn-secondary mx-5 mt-5">Apply Now</button>
+            </div>
+
+    </div>
+    <hr>
+
+</div>
+
+<!-- Wallet -->
+
+<div class="tab-pane fade show mx-5"   id="nav-wallet" role="tabpanel" aria-labelledby="nav-wallet-tab" tabindex="0">
+    <div class="display-3 text-end mx-5">Wallet <hr></div>
+
+          <div class="row mt-5">
+            <div class="col-auto mx-2 text-center">
+
+              <div class="recieve border border-secondary rounded mb-3" id="recieve-content" style="background-color:black;color:white;box-shadow:10px 10px 10px grey">
+                <div class="display-6">Recieve</div>
+              <div align="center" id="LWQ-MG-content-wallet-qr" class=" mt-2"></div>
+               <span id="wallet-address" class="small mt-3 mx-2"></span>
+              <br>
+              <hr>
+              Balance: <p class="display-5" id="wallet-balance"></p>
+              <br>
+              Pending: <p class="display-6" id="wallet-pending"></p>
+              <br>
+
+            </div>
+            </div><!--end col -->
+
+    <div class="col-auto mx-2 min-100">
+      <div class="recieve border border-secondary rounded w-75"  id="send-content"style="background-color:black;color:white;box-shadow:10px 10px 10px grey">
+
+          <div class="display-6 text-center">Send</div>
+          <hr>
+          <img src='graphics/ls_inverted.png' class="w-100" style="width:30px" alt="...">
+          <br>
+
+              <form class="mx-3">
+
+                    <label>Address</label>
+                    <input id="wallet-send-destination" type="text" class="form-control mb-3" placeholder="Destination">
+                    <hr>
+                    <label>Amount</label>
+                    <div class="input-group">
+                    <span class="input-group-text mb-3" id="basic-addon1">
+                      Ł</span>
+                    <input id="wallet-send-amount" type="text" class="form-control mb-3" placeholder="0.00" >
+                  </div>
+
+                  <div class=" text-center">
+                    <button type="button" class="btn btn-primary mb-3" onclick="sendOmni()">Send</button>
+                  </div>
+              </form>
+
+          </div>
+
+            </div><!--end col -->
+            <div class="col-auto">
+              <hr>
+              <p>For your security, after clicking send, you must confirm your transaction via email.</p>
+
+          </div>
+            <div class="col-1"></div>
+          </div><!-- end row -->
+</div>
+
+<!-- create -->
+<div class="tab-pane fade" id="nav-create" role="tabpanel" aria-labelledby="nav-create-tab" tabindex="0">...</div>
+
+<!-- art -->
+<div class="tab-pane fade" id="nav-art" role="tabpanel" aria-labelledby="nav-art-tab" tabindex="0">
+      <div class="search-wrapper m-3">
+        <label for="search"> Search Your Art</label>
+        <input type="search" id="search" data-search>
+      </div>
+      <div class="art-cards" data-art-cards-container>
+        <template  data-art-template>
+          <button type="button" class="btn" data-toggle="modal" data-target="#artModal" data-card-button>
+            <div class="card">
+
+            <img class="img" data-card-img />
+            <div class="header" data-header></div>
+            <div class="body" data-body></div>
+          </div>
+        </button>
+        </template>
+      </div>
+    </div>
+
+
+
+<!-- market -->
+<div class="tab-pane fade" id="nav-market" role="tabpanel" aria-labelledby="nav-market-tab" tabindex="0">
+
+      <div class="search-wrapper m-3">
+        <label for="searchTrader"> Search Market</label>
+        <input type="search" id="searchTrader" data-trader-search>
+      </div>
+      <div class="art-cards" data-art-cards-trader-container>
+        <template  data-art-trader-template>
+          <button type="button" class="btn" data-toggle="modal" data-target="#artModal" data-trader-card-button>
+
+          <div class="card">
+
+            <img class="img" data-trader-card-img />
+            <div class="header" data-trader-header></div>
+            <div class="body" data-trader-body></div>
+          </div>
+        </button>
+        </template>
+      </div>
+</div>
+
+
+
+<!-- About -->
+<div class="tab-pane fade mx-5" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab" tabindex="0" style="display:none">
+    <h4> Litecoin Studio </h4>
+    <p> Explore Art on Litecoin through a combination of Omni-Lite and Ordinals.</p>
+                  <p>Litecoin.Studio securely stores assets on the Litecoin blockchain using Omni-lite NFT's which point to immutable inscriptions on Litecoin Ordinals, preserving authenticity while providing power to the creators.
+              <p> Geared toward users, artists and collectors alike, ease is the main focus. Wallets have direct 1:1 blockchain representation, providing transparency and convenience to the exchange process, all of which is protected by 2- Factor Authentication.
+                <br>
+                <br>You can also explore the collections of those that came prior to Ordinal Technology, LitecoinStudio has backwards compatibility for some of the main collections on <a href="https://liteverse.io" target="_blank">Liteverse.io</a>.
+                <br>
+                <br>Soon, apply to create collections during this Alpha phase, for now, support artists in the space who are building for the future. Our platform empowers everyone to expand their reach in the Litecoin community.</p>
+  <br>
+  <h4>LiteWorlds Quest</h4>
+  <p>@LiteWorldsQuest is a custodial development API that grants developers and users access to a Litecoin Node. It offers account protection through 2-Factor Authentication via email, specifically supporting Gmail and ProtonMail.</p>
+
+  <p>The website liteworlds.quest serves as the initial example of a #LiteWorld, showcasing the capabilities of the API's backend </p>
+
+  <p>@LitecoinStudio (this application) represents another #LiteWorld created using the @LiteWorldsQuest API. It utilizes the API to develop an application functioning as a curated art museum of Litecoin Digital Assets.</p>
+
+  <p> We enhance the user experience and features a distinct and user-friendly interface.</p>
+
+  <p> These #LiteWorlds aim to inspire developers to explore the API's potential and create even more impressive applications while prioritizing user safety.</p>
+
+  <p>Developers building #LiteWorlds with the @LiteWorldsQuest API gain various advantages. These include access to complete blockchain transparency, the ability to access personal private keys in case @LiteWorldsQuest becomes unavailable, a global marketplace that can be filtered by the developer, asset management and creation functionality that can be offered to users at their discretion, and a fully functional wallet for comprehensive management, all operating on the Litecoin Blockchain.
+  </p>
+
+
+</div>
+<!-- Modal -->
+<div class="modal-container" data-modal-container>
+    <div class="modal fade" id="artModal" tabindex="-1" role="dialog" aria-labelledby="artModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-auto">
+        <div class="modal-body" id="modalBody">
+        </div>
+      </div> <!--end col-->
+      </div><!--end row-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FOOTER-->
+<footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top bg-secondary px-3">
+    <div class="col mb-3">
+      <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none mx-3"><h3>Litecoin.Studio</h3>
+        <img src='graphics/LS.png' style="width:45px" alt="...">
+      </a>
+      <hr>
+    </div>
+
+    <div class="col mb-3">
+
+    </div>
+
+    <div class="col mb-3">
+      <h5>Litecoin Studio</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>LiteWorlds Quest</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="https://liteworlds.quest" target="_blank" class="nav-link p-0 text-muted">Home</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Extension</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>General Litecoin</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="https://litecoinspace.org" target="_blank" class="nav-link p-0 text-muted">Block Exlporer</a></li>
+        <li class="nav-item mb-2"><a href="https://omnilite.org" target="_blank" class="nav-link p-0 text-muted">Omnilite</a></li>
+        <li class="nav-item mb-2"><a href="https://ordinalslite.com" target="_blank" class="nav-link p-0 text-muted">Ordinals Explorer</a></li>
+        <li class="nav-item mb-2"><a href="https://lookintolitecoin.com" target="_blank" class="nav-link p-0 text-muted">About</a></li>
+      </ul>
+    </div>
+  </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
