@@ -164,6 +164,8 @@ function getOmniTrader(){
            }
           })
         } )
+
+//DESIGN CARDS
         trader_collections = traderCollections.map(trader_collection => {
           if(trader_collection.propertyid){
           const cardTrader = artCardTraderTemplate.content.cloneNode(true).children[0]
@@ -172,16 +174,50 @@ function getOmniTrader(){
           const headerTrader = cardTrader.querySelector("[data-trader-header]")
           const bodyTrader = cardTrader.querySelector("[data-trader-body]")
           const cardTraderButton = cardTrader.querySelector("[data-trader-card-button]")
-          cardTrader.onclick = function() {
-            console.log("From Trader Click")
-            getTraderCollectionTokens(trader_collection.propertyid)
-            document.getElementById('modalBody').innerHTML = collectionTokens.join('</br>')
-          }
+
+
           headerTrader.textContent = trader_collection.name +" #"+trader_collection.propertyid
           imageTrader.src='graphics\\LS.jpg'
           imageTrader.style.maxWidth = "150px"
 
           artCardTraderContainer.append(cardTrader)
+
+          cardTrader.onclick = function() {
+            console.log("From Trader Click")
+//DESIGN TRADER COLLECTION MODAL TO DISPLAY EACH INDIVIDUAL token
+
+
+            document.getElementById('modalTitle').innerHTML = "Art Pieces from "+trader_collection.name +"<br> <h6>Collection: "+trader_collection.propertyid +"</h6>"
+            document.getElementById('modalBody').textContent = ''
+            getTraderCollectionTokens(trader_collection.propertyid).map(token => {
+              let url = API + 'omni-get-nft&property=' + trader_collection.propertyid + "&token=" + token
+              console.log("This is url")
+              console.log(url)
+              fetch(url).then((resp) => resp.json()).then(function(data){
+
+                   tokenData = data
+                   console.log("this is tokendata")
+                   console.log(tokenData)
+                   const p = document.createElement('p')
+                   p.innerHTML =  tokenData[0].index + ' ' + tokenData[0].owner + ' ' + tokenData[0].grantdata + ' ' + tokenData[0].holderdata
+                   document.getElementById('modalBody').append(p)
+              //     document.getElementById('wallet-balance').innerHTML = omni.balance + " Ł";
+              //     document.getElementById('wallet-pending').innerHTML = omni.pending  + " Ł";
+              //     document.getElementById('wallet-address').innerHTML = omni.address;
+              //     getOmniCollectionList()
+              //
+               })
+              return {
+                // name: token.name, propertyid: trader_collection.propertyid, element: cardTrader
+
+              }
+            })
+            // document.getElementById('modalBody').innerHTML =
+
+          }
+
+
+//return map of collections for sale
           return {
             name: trader_collection.name, propertyid: trader_collection.propertyid, element: cardTrader
           }
@@ -268,7 +304,10 @@ function sendOmni() {
       alert("Something went Wrong Litecoin Studio Side")
     }
 }
+function detectSource(){
 
+  
+}
 
 function showId(id){
   document.getElementById(id).style.display="block"

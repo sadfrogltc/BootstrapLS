@@ -9,6 +9,7 @@
     <link rel="icon" href="graphics\LS.png">
     <script type="text/javascript" src="qrcode.js"></script>
   </head>
+
   <body>
 <!--header -->
 <nav class="navbar bg-body-tertiary">
@@ -377,6 +378,16 @@
           <div class="row">
             <div class="col-auto">
         <div class="modal-body" id="modalBody">
+          <div class="modal-cards" data-modal-cards-container>
+            <template  data-modal-template>
+                <div class="card">
+                <img class="img" data-modal-card-img />
+                <div class="header" data-modal-header></div>
+                <div class="body" data-modal-body></div>
+              </div>
+
+            </template>
+          </div>
         </div>
       </div> <!--end col-->
       </div><!--end row-->
