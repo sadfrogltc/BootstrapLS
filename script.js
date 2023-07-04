@@ -121,6 +121,9 @@ function getOmniCollectionList(){
             getUserCollectionTokens(collection.propertyid)
             document.getElementById('modalBody').innerHTML = collectionTokens.join('</br>')
           }
+          document.getElementById('modalTitle').innerHTML = "Art Pieces from "+collection.name +"<br> <h6>Collection: "+collection.propertyid +"</h6>"
+          document.getElementById('modalBody').textContent = ''
+
           header.textContent = collection.name +" #"+collection.propertyid
           image.src='graphics\\LS.jpg'
           image.style.maxWidth = "150px"
@@ -147,7 +150,7 @@ function getOmniTrader(){
           traderCollections.push(traderCollection)
 
         })
-        //RENDERS CARDS
+        //RENDERS COLLECTION CARDS
         const searchTraderInput = document.querySelector("[data-trader-search]")
         const artCardTraderTemplate = document.querySelector("[data-art-trader-template]")
         const artCardTraderContainer = document.querySelector("[data-art-cards-trader-container]")
@@ -165,7 +168,7 @@ function getOmniTrader(){
           })
         } )
 
-//DESIGN CARDS
+//DESIGN COLLECTION CARDS
         trader_collections = traderCollections.map(trader_collection => {
           if(trader_collection.propertyid){
           const cardTrader = artCardTraderTemplate.content.cloneNode(true).children[0]
@@ -198,14 +201,38 @@ function getOmniTrader(){
                    tokenData = data
                    console.log("this is tokendata")
                    console.log(tokenData)
-                   const p = document.createElement('p')
-                   p.innerHTML =  tokenData[0].index + ' ' + tokenData[0].owner + ' ' + tokenData[0].grantdata + ' ' + tokenData[0].holderdata
-                   document.getElementById('modalBody').append(p)
-              //     document.getElementById('wallet-balance').innerHTML = omni.balance + " Ł";
-              //     document.getElementById('wallet-pending').innerHTML = omni.pending  + " Ł";
-              //     document.getElementById('wallet-address').innerHTML = omni.address;
-              //     getOmniCollectionList()
-              //
+                   const card = document.createElement('div')
+                   const img = document.createElement('img')
+                   const header = document.createElement('div')
+                   const body = document.createElement('div')
+                   card.classList.add("card")
+                   img.classList.add("img")
+                   header.classList.add("header")
+                   body.classList.add("body")
+
+                   grantdata = detectSource(tokenData[0].grantdata)
+                   console.log("This is detectSource")
+                               if(grantdata.origin == "LiteWorlds"){
+                                 if(grantdata.content){
+                                 img.src = ORDINAL + grantdata.content
+                                 console.log("is ordinal")
+                               }
+                               else{
+                                 img.src = IPFS + grantdata.image.split('ipfs://')[1]
+                                 console.log(img.src)
+                                 console.log("is not ordinal")
+                               }
+                               }
+                               else if (grantdata.origin == "Liteverse"){
+                                 img.src = IPFS + grantdata.image.split('ipfs://')[1]
+                               }
+                               card.append(img)
+                               card.append(header)
+                               card.append(body)
+                               header.innerHTML =  grantdata.name
+                               body.innerHTML = "Token Number: "+ tokenData[0].index  + '<br> Price: ' + JSON.parse(tokenData[0].holderdata).desire + "<br>"
+                                                + ' sold by ' + JSON.parse(tokenData[0].holderdata).destination
+                   document.getElementById('modalBody').append(card)
                })
               return {
                 // name: token.name, propertyid: trader_collection.propertyid, element: cardTrader
@@ -304,9 +331,30 @@ function sendOmni() {
       alert("Something went Wrong Litecoin Studio Side")
     }
 }
-function detectSource(){
+function detectSource(grantdata){
+  try{
+  //DETECT LITEWORLDS
+  grantdata = JSON.parse(grantdata)
+  grantdata.origin = "LiteWorlds"
+  console.log("LiteWorlds")
+  console.log(grantdata)
 
-  
+}
+catch {
+  //DETECT LITEVERSE
+  console.log("Liteverse")
+
+  grantdata= grantdata.replaceAll("{'", '{"')
+  grantdata = grantdata.replaceAll("'}", '"}')
+  grantdata = grantdata.replaceAll("':'", '":"')
+  grantdata = grantdata.replaceAll("','", '","')
+  grantdata = JSON.parse(grantdata)
+  grantdata.origin = "Liteverse"
+  console.log(grantdata)
+}
+
+
+  return grantdata
 }
 
 function showId(id){
