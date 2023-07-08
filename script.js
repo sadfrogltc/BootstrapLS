@@ -179,9 +179,10 @@ function getOmniCollectionList(){
 
 
                    setPriceInput.type = "number"
+                   setPriceInput.placeholder = "Set Price Here"
                    setPriceInput.classList.add("mx-3")
                    setPriceInput.classList.add("w-75")
-                   setPriceInput.classList.add("input")
+                   setPriceInput.classList.add("form-control")
 
 
                    setPriceButton.classList.add("btn")
@@ -261,9 +262,10 @@ function getOmniCollectionList(){
                                card.append(setPriceButton)
                                card.append(listButton)
                                header.innerHTML =  grantdata.name
-                               body.innerHTML = "Token Number: "+ tokenData[0].index
+                               body.innerHTML = "Token Number: "+ tokenData[0].index + "<hr> <div class='display-6 mx-3'>Market Operations</div><hr>"
+
                                if (holderdata.destination == omni.address) {
-                                   body.innerHTML = "Token Number: "+ tokenData[0].index + "<br>Price: "+tokenPrice
+                                   body.innerHTML = "Token Number: "+ tokenData[0].index + "<br>Price: "+tokenPrice +"Ł<hr> <div class='display-6 mx-3'>Market Operations</div><hr>"
                                }
                    document.getElementById('modalBody').append(card)
                })
@@ -386,7 +388,7 @@ function getOmniTrader(){
             else{
               imageTrader.src = IPFS + grantdata.image.split('ipfs://')[1]
               videoTrader.src =  IPFS + grantdata.image.split('ipfs://')[1]
-              console.log(image.src)
+              console.log(imageTrader.src)
               console.log("is not ordinal")
             }
             }
