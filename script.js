@@ -19,21 +19,18 @@ var traderCollections = new Array
 
 var collectionTokens = []
 var getOmniCollectionListCounter =0;
-let feeAddress = 'ltc1qduhgah34d7wl8aq235mkstrx5kn770rwzr369u'
+const feeAddress = 'ltc1qduhgah34d7wl8aq235mkstrx5kn770rwzr369u'
+
+const featuredCollections = ["3859"]
+
 getIP()
 getExtension()
+
 function getExtension(){document.addEventListener('LWQ-AuthKey', function(data) {
     AuthKey = data.detail
     console.log(AuthKey)
-
-
-
-
-
-
     getUser()
 })}
-
 function getIP() {
     let url = API + 'public-hello'
     fetch(url).then((resp) => resp.json()).then(function(data){
@@ -41,10 +38,11 @@ function getIP() {
             IP = data.ip
             console.log(data)
             console.log("IP: "+ data.ip)
+            getOmniTrader()
         }
     })
-}
 
+}
 function getUser() {
     let url = API + 'user-get&authkey=' + AuthKey
     fetch(url).then((resp) => resp.json()).then(function(data){
@@ -82,9 +80,13 @@ function getOmni() {
 
     })
 }
+function getFeaturedArt(){
+
+
+}
 function getOmniCollectionList(){
 
-        if(getOmniCollectionListCounter==0){
+        if(getOmniCollectionListCounter==1){
 
         userCollectionList = omni.token.nft;
         userCollectionList.forEach(userCollection => {
@@ -127,12 +129,9 @@ function getOmniCollectionList(){
           body.classList.add("bg-dark")
           body.classList.add("text-white")
 
-
-
           card.onclick = function() {
             console.log("From Inventory Click")
 //DESIGN USER COLLECTION MODAL TO DISPLAY EACH INDIVIDUAL token
-
 
             document.getElementById('modalTitle').innerHTML = "Art Pieces from "+collection.name +"<br> <h6>Collection: "+collection.propertyid +"</h6>"
             document.getElementById('modalBody').textContent = ''
@@ -144,8 +143,6 @@ function getOmniCollectionList(){
                 const setPriceButton = document.createElement("button")
                 const listButton = document.createElement("button")
                    tokenData = data
-                   //
-
                         let holderdata = new Object
                         try {
 
@@ -159,7 +156,6 @@ function getOmniCollectionList(){
                           listButton.disabled = true
                         }
 
-                   //
                    console.log("this is tokendata")
                    console.log(tokenData)
                    const card = document.createElement('div')
@@ -170,21 +166,11 @@ function getOmniCollectionList(){
                    const header = document.createElement('div')
                    const body = document.createElement('div')
                    const setPriceInput = document.createElement("input")
-//todo: conditional set price/change price based on holder data
-//set price and change price (change holder data)
-//conditional list based on holderdata
-
-
-
-
-
                    setPriceInput.type = "number"
                    setPriceInput.placeholder = "Set Price Here"
                    setPriceInput.classList.add("mx-3")
                    setPriceInput.classList.add("w-75")
                    setPriceInput.classList.add("form-control")
-
-
                    setPriceButton.classList.add("btn")
                    setPriceButton.classList.add("btn-dark")
                    setPriceButton.classList.add("m-3")
@@ -205,8 +191,6 @@ function getOmniCollectionList(){
 
                              alert(data.answer + '\nSign this transaction and wait for 1 confirmation from the network to continue   ' + url)
                          })
-
-
           }
           listButton.classList.add("btn")
           listButton.classList.add("btn-dark")
@@ -328,10 +312,11 @@ function getOmniCollectionList(){
 
       }
       getOmniCollectionListCounter++
-      getOmniTrader()
+
 }
 function getOmniTrader(){
-  if(getOmniCollectionListCounter==1){
+
+  if(getOmniCollectionListCounter==0){
     let url = API + 'omni-get-trader'
     fetch(url).then((resp) => resp.json()).then(function(data){
         traderList = data
@@ -451,20 +436,18 @@ function getOmniTrader(){
                    button.classList.add("btn")
                    button.classList.add("btn-dark")
                    button.classList.add("m-3")
-                   if(holderData.destination==omni.address){
-                     button.textContent = "Cancel Listing"
-                     button.onclick = function(){
-                       let url = API + 'omni-cancel-trader&authkey=' + AuthKey + '&property=' + trader_collection.propertyid + '&token=' + token
-                         fetch(url).then((resp) => resp.json()).then(function(data){
-                             alert(data.answer)
-                         })
-                    console.log("Clicked Cancel")
 
-                }
-            }
+
+            if(!omni.address){
+            button.textContent = "Get Extension to Login"
+            button.onclick =function(){
+              window.open('https://chrome.google.com/webstore/detail/liteworlds/npdhoeodcojbmdioodndhnnodjacfhil','_blank')}
+
+          }
             else{
 
                    button.textContent = "Buy"
+                   console.log("HOLDER:"+ holderData.destination)
                    button.onclick = function(){
               let url = API + 'omni-take-trader&authkey=' + AuthKey + '&property=' + trader_collection.propertyid + '&token=' + token
               fetch(url).then((resp) => resp.json()).then(function(data){
@@ -475,6 +458,17 @@ function getOmniTrader(){
               })
           }
         }
+        if(holderData.destination==omni.address){
+          button.textContent = "Cancel Listing"
+          button.onclick = function(){
+            let url = API + 'omni-cancel-trader&authkey=' + AuthKey + '&property=' + trader_collection.propertyid + '&token=' + token
+              fetch(url).then((resp) => resp.json()).then(function(data){
+                  alert(data.answer)
+              })
+         console.log("Clicked Cancel")
+
+     }
+ }
 
                    card.classList.add("card")
                    img.classList.add("img")
@@ -544,7 +538,12 @@ function getOmniTrader(){
     })
 }
 getOmniCollectionListCounter++
-
+if(AuthKey==""){
+  //if not logged in display changes:
+  document.getElementById("recieve-content").innerHTML = "<div class='display-4 m-3'>You are not logged in</div>"
+  document.getElementById("send-content").innerHTML = "<div class='display-4 m-3'>Download the Extension</div><a href='https://chrome.google.com/webstore/detail/liteworlds/npdhoeodcojbmdioodndhnnodjacfhil' target='_blank'><button class='btn border border-light m-5 shadow text-light'><img src='graphics/LWLA.png' class='w-100 p-5' style='width:30px'><h3>Click Here</h3></button></a>"
+  document.getElementById("username-display").innerHTML = "<h3>Guest</h3>"
+}
 }
 function getUserCollectionTokens(c){
   console.log("This is c")
@@ -590,9 +589,7 @@ function ltcfaucet() {
     let url = API + 'omni-send-faucet&authkey=' + AuthKey
     fetch(url).then((resp) => resp.json()).then(function(data){
         alert(data.answer)
-        if (data.bool) {
-            getUser()
-        }
+      
     })
 }
 function sendOmni() {
