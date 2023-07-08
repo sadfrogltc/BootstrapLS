@@ -293,16 +293,18 @@
 
 <!-- art -->
 <div class="tab-pane fade" id="nav-art" role="tabpanel" aria-labelledby="nav-art-tab" tabindex="0">
+  <div class="display-5 mx-3">Your Collections</div>
       <div class="search-wrapper m-3">
         <label for="search"> Search Your Art</label>
         <input type="search" id="search" data-search>
       </div>
-      <div class="art-cards" data-art-cards-container>
+      <div class="art-cards mx-5" data-art-cards-container>
         <template  data-art-template>
           <button type="button" class="btn" data-toggle="modal" data-target="#artModal" data-card-button>
-            <div class="card">
+            <div class="card bg-dark">
 
-            <img class="img" data-card-img />
+            <img class="img rounded" data-card-img />
+            <hr class="text-white">
             <div class="header" data-header></div>
             <div class="body" data-body></div>
           </div>
@@ -315,16 +317,16 @@
 
 <!-- market -->
 <div class="tab-pane fade" id="nav-market" role="tabpanel" aria-labelledby="nav-market-tab" tabindex="0">
-
+  <div class="display-5 mx-3">Market Collections</div>
       <div class="search-wrapper m-3">
         <label for="searchTrader"> Search Market</label>
         <input type="search" id="searchTrader" data-trader-search>
       </div>
-      <div class="art-cards" data-art-cards-trader-container>
+      <div class="art-cards mx-5" data-art-cards-trader-container>
         <template  data-art-trader-template>
-          <button type="button" class="btn" data-toggle="modal" data-target="#artModal" data-trader-card-button>
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#artModal" data-card-button>
 
-          <div class="card">
+          <div class="card bg-dark">
 
             <img class="img" data-trader-card-img />
             <div class="header" data-trader-header></div>
@@ -380,7 +382,7 @@
         <div class="modal-body" id="modalBody">
           <div class="modal-cards" data-modal-cards-container>
             <template  data-modal-template>
-                <div class="card">
+                <div class="card border border-dark">
                 <img class="img" data-modal-card-img />
                 <div class="header" data-modal-header></div>
                 <div class="body" data-modal-body></div>
@@ -393,7 +395,7 @@
       </div><!--end row-->
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+
         </div>
       </div>
     </div>

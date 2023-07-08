@@ -113,20 +113,210 @@ function getOmniCollectionList(){
           if(collection.propertyid){
             console.log(collection.propertyid)
           const card = artCardTemplate.content.cloneNode(true).children[0]
+          card.classList.add("bg-dark")
+          card.classList.add("rounded")
           const image = card.querySelector("[data-card-img]")
+          image.classList.add("bg-dark")
+
+          const videoUser = document.createElement("video")
           const header = card.querySelector("[data-header]")
+          header.classList.add("bg-dark")
+          header.classList.add("text-white")
+
           const body = card.querySelector("[data-body]")
-          const cardButton = card.querySelector("[data-card-button]")
+          body.classList.add("bg-dark")
+          body.classList.add("text-white")
+
+
+
           card.onclick = function() {
-            getUserCollectionTokens(collection.propertyid)
-            document.getElementById('modalBody').innerHTML = collectionTokens.join('</br>')
+            console.log("From Inventory Click")
+//DESIGN USER COLLECTION MODAL TO DISPLAY EACH INDIVIDUAL token
+
+
+            document.getElementById('modalTitle').innerHTML = "Art Pieces from "+collection.name +"<br> <h6>Collection: "+collection.propertyid +"</h6>"
+            document.getElementById('modalBody').textContent = ''
+            getUserCollectionTokens(collection.propertyid).map(token => {
+              let url = API + 'omni-get-nft&property=' + collection.propertyid + "&token=" + token
+              console.log("This is url")
+              console.log(url)
+              fetch(url).then((resp) => resp.json()).then(function(data){
+                const setPriceButton = document.createElement("button")
+                const listButton = document.createElement("button")
+                   tokenData = data
+                   //
+
+                        let holderdata = new Object
+                        try {
+
+                                 holderdata = JSON.parse(tokenData[0].holderdata)
+                                     if (holderdata.destination == omni.address) {
+                                         console.log("Price"+ holderdata.desire)
+                                         tokenPrice = holderdata.desire
+                                     }
+                        } catch (error) {
+                          console.log("No Price")
+                          listButton.disabled = true
+                        }
+
+                   //
+                   console.log("this is tokendata")
+                   console.log(tokenData)
+                   const card = document.createElement('div')
+                   card.classList.add("rounded")
+
+                   const img = document.createElement('img')
+                   const video = document.createElement("video")
+                   const header = document.createElement('div')
+                   const body = document.createElement('div')
+                   const setPriceInput = document.createElement("input")
+//todo: conditional set price/change price based on holder data
+//set price and change price (change holder data)
+//conditional list based on holderdata
+
+
+
+
+
+                   setPriceInput.type = "number"
+                   setPriceInput.classList.add("mx-3")
+                   setPriceInput.classList.add("w-75")
+                   setPriceInput.classList.add("input")
+
+
+                   setPriceButton.classList.add("btn")
+                   setPriceButton.classList.add("btn-dark")
+                   setPriceButton.classList.add("m-3")
+                   setPriceButton.textContent = "Set New Price"
+                   setPriceButton.onclick = function(){
+                     let holderdata = new Object
+                         let property = collection.propertyid
+
+                         holderdata.desire = setPriceInput.value
+                         holderdata.destination = omni.address
+
+
+                         holderdata = JSON.stringify(holderdata)
+                         let url = API + 'omni-desire-trader&authkey=' + AuthKey + '&property=' + property + '&token=' + token + '&holderdata=' + holderdata
+                         url = encodeURI(url)
+                         console.log(url)
+                         fetch(url).then((resp) => resp.json()).then(function(data){
+
+                             alert(data.answer + '\nSign this transaction and wait for 1 confirmation from the network to continue   ' + url)
+                         })
+
+
           }
-          document.getElementById('modalTitle').innerHTML = "Art Pieces from "+collection.name +"<br> <h6>Collection: "+collection.propertyid +"</h6>"
-          document.getElementById('modalBody').textContent = ''
+          listButton.classList.add("btn")
+          listButton.classList.add("btn-dark")
+          listButton.classList.add("m-3")
+          listButton.textContent = "List"
+          listButton.onclick = function(){
+            let url = API + 'omni-list-trader&authkey=' + AuthKey + '&property=' + collection.propertyid + '&token=' + token +'&challenger='+ feeAddress
+             fetch(url).then((resp) => resp.json()).then(function(data){
+                 alert(data.answer + 'After 1 confirmation your NFT will be available at the Trader Bot')
+             })
+ }
+
+                   card.classList.add("card")
+
+                   img.classList.add("img")
+                   header.classList.add("header")
+                   body.classList.add("body")
+
+                   grantdata = detectSource(tokenData[0].grantdata)
+                   console.log("This is detectSource")
+                               if(grantdata.origin == "LiteWorlds"){
+                                 if(grantdata.content){
+                                 img.src = ORDINAL + grantdata.content
+                                 video.src = ORDINAL + grantdata.content
+                                 console.log("is ordinal")
+                               }
+                               else{
+                                 img.src = IPFS + grantdata.image.split('ipfs://')[1]
+                                 video.src = IPFS + grantdata.image.split('ipfs://')[1]
+                                 console.log(img.src)
+                                 console.log("is not ordinal")
+                               }
+                               }
+                               else if (grantdata.origin == "Liteverse"){
+                                 img.src = IPFS + grantdata.image.split('ipfs://')[1]
+                                 video.src = IPFS + grantdata.image.split('ipfs://')[1]
+                               }
+                               video.id = 'aud' + collection.propertyid + '#' + token
+                         video.controls = true
+                         video.style.display = 'none'
+                         video.style.marginTop = '37px'
+                         video.style.maxHeight = '250px'
+                         video.style.maxWidth = '200px'
+                         video.oncanplay = function(){
+                             document.getElementById('aud' + collection.propertyid + '#' + token).style.display = 'inline-block'
+                         }
+                         img.onerror = function(){this.style.display='none';}
+                               card.append(img)
+                               card.append(video)
+                               card.append(header)
+                               card.append(body)
+                               card.append(setPriceInput)
+                               card.append(setPriceButton)
+                               card.append(listButton)
+                               header.innerHTML =  grantdata.name
+                               body.innerHTML = "Token Number: "+ tokenData[0].index
+                               if (holderdata.destination == omni.address) {
+                                   body.innerHTML = "Token Number: "+ tokenData[0].index + "<br>Price: "+tokenPrice
+                               }
+                   document.getElementById('modalBody').append(card)
+               })
+              return {
+                // name: token.name, propertyid: trader_collection.propertyid, element: cardTrader
+
+              }
+            })
+            // document.getElementById('modalBody').innerHTML =
+
+          }
+
 
           header.textContent = collection.name +" #"+collection.propertyid
-          image.src='graphics\\LS.jpg'
+          let url = API + 'omni-get-nft&property=' + collection.propertyid
+          console.log("This is url")
+          console.log(url)
+          fetch(url).then((resp) => resp.json()).then(function(data){
+            console.log(data)
+            console.log("For first image")
+            grantdata= detectSource(data[0].grantdata)
+            console.log(grantdata)
+            if(grantdata.origin == "LiteWorlds"){
+              if(grantdata.content){
+              image.src = ORDINAL + grantdata.content
+              videoUser.src = ORDINAL + grantdata.content
+              console.log("is ordinal")
+            }
+            else{
+              image.src = IPFS + grantdata.image.split('ipfs://')[1]
+              videoUser.src = IPFS + grantdata.image.split('ipfs://')[1]
+              console.log(image.src)
+              console.log("is not ordinal")
+            }
+            }
+            else if (grantdata.origin == "Liteverse"){
+              image.src = IPFS + grantdata.image.split('ipfs://')[1]
+              videoUser.src = IPFS + grantdata.image.split('ipfs://')[1]
+            }
+
+          })
+          videoUser.id = 'aud' + collection.propertyid
+          videoUser.controls = true
+          videoUser.style.display = 'none'
+          videoUser.style.marginTop = '37px'
+          videoUser.style.maxHeight = '250px'
+          videoUser.style.maxWidth = '100px'
+          videoUser.oncanplay = function(){
+            document.getElementById('aud' + collection.propertyid).style.display = 'inline-block'
+          }
           image.style.maxWidth = "150px"
+          image.onerror = function(){this.style.display='none';}
+          card.prepend(videoUser)
           artCardContainer.append(card)
           return {
             name: collection.name, propertyid: collection.propertyid, element: card
@@ -174,17 +364,60 @@ function getOmniTrader(){
           const cardTrader = artCardTraderTemplate.content.cloneNode(true).children[0]
 
           const imageTrader = cardTrader.querySelector("[data-trader-card-img]")
+          const videoTrader = document.createElement("video")
           const headerTrader = cardTrader.querySelector("[data-trader-header]")
           const bodyTrader = cardTrader.querySelector("[data-trader-body]")
           const cardTraderButton = cardTrader.querySelector("[data-trader-card-button]")
 
+          let url = API + 'omni-get-nft&property=' + trader_collection.propertyid
+          console.log("This is url")
+          console.log(url)
+          fetch(url).then((resp) => resp.json()).then(function(data){
+            console.log(data)
+            console.log("For first image")
+            grantdata= detectSource(data[0].grantdata)
+            console.log(grantdata)
+            if(grantdata.origin == "LiteWorlds"){
+              if(grantdata.content){
+              imageTrader.src = ORDINAL + grantdata.content
+              videoTrader.src = ORDINAL + grantdata.content
+              console.log("is ordinal")
+            }
+            else{
+              imageTrader.src = IPFS + grantdata.image.split('ipfs://')[1]
+              videoTrader.src =  IPFS + grantdata.image.split('ipfs://')[1]
+              console.log(image.src)
+              console.log("is not ordinal")
+            }
+            }
+            else if (grantdata.origin == "Liteverse"){
+              imageTrader.src = IPFS + grantdata.image.split('ipfs://')[1]
+              videoTrader.src =  IPFS + grantdata.image.split('ipfs://')[1]
 
-          headerTrader.textContent = trader_collection.name +" #"+trader_collection.propertyid
-          imageTrader.src='graphics\\LS.jpg'
-          imageTrader.style.maxWidth = "150px"
+            }
 
+          })
+          videoTrader.id = 'aud' + trader_collection.propertyid + 1
+    videoTrader.controls = true
+    videoTrader.style.display = 'none'
+    videoTrader.style.marginTop = '37px'
+    videoTrader.style.maxHeight = '250px'
+    videoTrader.style.maxWidth = '100px'
+    videoTrader.oncanplay = function(){
+        document.getElementById('aud' + trader_collection.propertyid +1).style.display = 'inline-block'
+    }
+          cardTrader.prepend(videoTrader)
+          console.log("prepended")
+          imageTrader.onerror = function(){this.style.display='none';}
+          headerTrader.innerHTML = trader_collection.name +"<hr> <div style='font-size:10px'>#"+trader_collection.propertyid +"</div>"
+
+          imageTrader.style.maxWidth = "250px"
+          imageTrader.style.maxHeight = "100px"
           artCardTraderContainer.append(cardTrader)
-
+          cardTrader.classList.add("bg-dark")
+          headerTrader.classList.add("text-light")
+          headerTrader.classList.add("bg-dark")
+          bodyTrader.classList.add("text-light")
           cardTrader.onclick = function() {
             console.log("From Trader Click")
 //DESIGN TRADER COLLECTION MODAL TO DISPLAY EACH INDIVIDUAL token
@@ -199,12 +432,48 @@ function getOmniTrader(){
               fetch(url).then((resp) => resp.json()).then(function(data){
 
                    tokenData = data
+                   holderData = JSON.parse(tokenData[0].holderdata)
                    console.log("this is tokendata")
                    console.log(tokenData)
                    const card = document.createElement('div')
+                   card.classList.add("m-3")
                    const img = document.createElement('img')
+                   const video = document.createElement('video')
+
                    const header = document.createElement('div')
+                   header.classList.add("m-3")
+                   header.classList.add("mb-1")
                    const body = document.createElement('div')
+                   body.classList.add("m-3")
+                   const button = document.createElement('button')
+                   button.classList.add("btn")
+                   button.classList.add("btn-dark")
+                   button.classList.add("m-3")
+                   if(holderData.destination==omni.address){
+                     button.textContent = "Cancel Listing"
+                     button.onclick = function(){
+                       let url = API + 'omni-cancel-trader&authkey=' + AuthKey + '&property=' + trader_collection.propertyid + '&token=' + token
+                         fetch(url).then((resp) => resp.json()).then(function(data){
+                             alert(data.answer)
+                         })
+                    console.log("Clicked Cancel")
+
+                }
+            }
+            else{
+
+                   button.textContent = "Buy"
+                   button.onclick = function(){
+              let url = API + 'omni-take-trader&authkey=' + AuthKey + '&property=' + trader_collection.propertyid + '&token=' + token
+              fetch(url).then((resp) => resp.json()).then(function(data){
+                  alert(data.answer)
+                  console.log(url)
+                  console.log("Clicked Buy")
+
+              })
+          }
+        }
+
                    card.classList.add("card")
                    img.classList.add("img")
                    header.classList.add("header")
@@ -215,23 +484,42 @@ function getOmniTrader(){
                                if(grantdata.origin == "LiteWorlds"){
                                  if(grantdata.content){
                                  img.src = ORDINAL + grantdata.content
+                                 video.src = ORDINAL + grantdata.content
+
                                  console.log("is ordinal")
                                }
                                else{
                                  img.src = IPFS + grantdata.image.split('ipfs://')[1]
                                  console.log(img.src)
                                  console.log("is not ordinal")
+                                 video.src = IPFS + grantdata.image.split('ipfs://')[1]
+
                                }
                                }
                                else if (grantdata.origin == "Liteverse"){
                                  img.src = IPFS + grantdata.image.split('ipfs://')[1]
+                                 video.src = IPFS + grantdata.image.split('ipfs://')[1]
+
                                }
+                               video.id = 'aud' + trader_collection.propertyid + '#' + token
+                               video.controls = true
+                               video.style.display = 'none'
+                               video.style.marginTop = '37px'
+                               video.style.maxHeight = '250px'
+                               video.style.maxWidth = '250px'
+                               video.oncanplay = function(){
+                                   document.getElementById('aud' + trader_collection.propertyid + '#' + token).style.display = 'inline-block'
+                               }
+
                                card.append(img)
+                               card.append(video)
+                               img.onerror = function(){this.style.display='none';}
                                card.append(header)
                                card.append(body)
-                               header.innerHTML =  grantdata.name
-                               body.innerHTML = "Token Number: "+ tokenData[0].index  + '<br> Price: ' + JSON.parse(tokenData[0].holderdata).desire + "<br>"
-                                                + ' sold by ' + JSON.parse(tokenData[0].holderdata).destination
+                               card.append(button)
+                               header.innerHTML =  grantdata.name + '<hr>'
+                               body.innerHTML = "Token Number: "+ tokenData[0].index  + '<br> <div class="display-5">' + JSON.parse(tokenData[0].holderdata).desire + " Ł</div><br>"
+                                                + ' Seller: ' + JSON.parse(tokenData[0].holderdata).destination
                    document.getElementById('modalBody').append(card)
                })
               return {
@@ -330,6 +618,13 @@ function sendOmni() {
     else{
       alert("Something went Wrong Litecoin Studio Side")
     }
+}
+function buyNFT(propertyid, tokenid){
+  console.log("Running Buy")
+  let url = API + 'omni-take-trader&authkey=' + AuthKey + '&property=' + propertyid + '&token=' + tokenid
+  fetch(url).then((resp) => resp.json()).then(function(data){
+      alert(data.answer)
+  })
 }
 function detectSource(grantdata){
   try{
