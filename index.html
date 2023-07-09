@@ -246,7 +246,7 @@
           </div>
 
             </div><!--end col -->
-            <div class="col-auto">
+            <div class="col-auto mx-2">
               <div class=" border border-secondary bg-success rounded w-75 mt-2 mx-2"  id="faucet-content"style="color:white;box-shadow:10px 10px 10px grey;cursor:pointer" onclick="ltcfaucet()">
 
                   <div class="display-6 text-center">Faucet</div>
@@ -258,7 +258,6 @@
 
                   </div>
           </div>
-            <div class="col-1"></div>
           </div><!-- end row -->
 </div>
 
@@ -356,7 +355,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle">Modal title</h5>
+            <h5 class="modal-title" id="modalTitle">Modal</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -384,6 +383,48 @@
       </div>
     </div>
   </div>
+</div>
+<div class="login-modal-container" data-login-modal-container>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="artModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Litecoin.Studio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row">
+        <div class="col-auto">
+    <div class="modal-body mx-5" id="modalBody">
+<!-- LOGIN -->
+        <form>
+        <div class="form-group">
+        <label for="login-username">Username</label>
+        <input type="email" class="form-control" id="login-username" aria-describedby="emailHelp" placeholder="Enter Username">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" class="form-control" id="login-password" placeholder="Password">
+        </div>
+
+        <button type="button" onclick="login()" class="btn btn-secondary m-3">Login</button>
+        </form>
+        <hr>
+        <h5>Register</h5>
+        <hr>
+      <a href="https://liteworlds.quest" target="_blank"><button class="btn btn-secondary">Register Using the LiteWorlds Quest</button></a>
+    </div>
+  </div> <!--end col-->
+  </div><!--end row-->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+    </div>
+  </div>
+</div>
+</div>
 </div>
 <!--FOOTER-->
 <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top bg-secondary px-3">

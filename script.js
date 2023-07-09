@@ -51,8 +51,6 @@ function getUser() {
             console.log(data)
             if(AuthKey==""){
               //if not logged in display changes:
-              document.getElementById("recieve-content").innerHTML = "<div class='display-4 m-3'>You are not logged in</div>"
-              document.getElementById("send-content").innerHTML = "<div class='display-4 m-3'>Download the Extension</div><a href='https://chrome.google.com/webstore/detail/liteworlds/npdhoeodcojbmdioodndhnnodjacfhil' target='_blank'><button class='btn border border-light m-5 shadow text-light'><img src='graphics/LWLA.png' class='w-100 p-5' style='width:30px'><h3>Click Here</h3></button></a>"
               document.getElementById("username-display").innerHTML = "<h3>Guest</h3>"
             }
             else{
@@ -249,7 +247,7 @@ function getOmniCollectionList(){
                                body.innerHTML = "Token Number: "+ tokenData[0].index + "<hr> <div class='display-6 mx-3'>Market Operations</div><hr>"
 
                                if (holderdata.destination == omni.address) {
-                                   body.innerHTML = "Token Number: "+ tokenData[0].index + "<br>Price: "+tokenPrice +"Ł<hr> <div class='display-6 mx-3'>Market Operations</div><hr>"
+                                   body.innerHTML = "Token Number: "+ tokenData[0].index + "<br>Price: "+tokenPrice +" Ł<hr> <div class='display-6 mx-3'>Market Operations</div><hr>"
                                }
                    document.getElementById('modalBody').append(card)
                })
@@ -439,9 +437,7 @@ function getOmniTrader(){
 
 
             if(!omni.address){
-            button.textContent = "Get Extension to Login"
-            button.onclick =function(){
-              window.open('https://chrome.google.com/webstore/detail/liteworlds/npdhoeodcojbmdioodndhnnodjacfhil','_blank')}
+            button.style.display="none"
 
           }
             else{
@@ -540,9 +536,11 @@ function getOmniTrader(){
 getOmniCollectionListCounter++
 if(AuthKey==""){
   //if not logged in display changes:
-  document.getElementById("recieve-content").innerHTML = "<div class='display-4 m-3'>You are not logged in</div>"
-  document.getElementById("send-content").innerHTML = "<div class='display-4 m-3'>Download the Extension</div><a href='https://chrome.google.com/webstore/detail/liteworlds/npdhoeodcojbmdioodndhnnodjacfhil' target='_blank'><button class='btn border border-light m-5 shadow text-light'><img src='graphics/LWLA.png' class='w-100 p-5' style='width:30px'><h3>Click Here</h3></button></a>"
-  document.getElementById("username-display").innerHTML = "<h3>Guest</h3>"
+  document.getElementById("username-display").innerHTML = "<button class='btn btn-secondary' type='button' data-toggle='modal' data-target='#loginModal'>Login</button>"
+  document.getElementById("nav-art-tab").disabled=true
+  document.getElementById("nav-wallet-tab").disabled=true
+
+
 }
 }
 function getUserCollectionTokens(c){
@@ -589,7 +587,7 @@ function ltcfaucet() {
     let url = API + 'omni-send-faucet&authkey=' + AuthKey
     fetch(url).then((resp) => resp.json()).then(function(data){
         alert(data.answer)
-      
+
     })
 }
 function sendOmni() {
@@ -650,11 +648,44 @@ catch {
 
   return grantdata
 }
+async function login() {
+    let user = document.getElementById('login-username').value
+    let pass = await sha512(document.getElementById('login-password').value)
 
+    let url = API + 'user-login&user=' + user + '&pass=' + pass
+    fetch(url).then((resp) => resp.json()).then(function(data){
+        AuthKey = data.AuthKey
+
+        url = API + 'user-get&authkey=' + AuthKey
+        let interval = setInterval(function(){
+            fetch(url).then((resp) => resp.json()).then(function(data){
+                if (data.bool) {
+                    clearInterval(interval)
+                    getUser()
+                    document.getElementById("nav-art-tab").disabled=false
+                    document.getElementById("nav-wallet-tab").disabled=false
+                }
+            })
+        },5000)
+
+
+        alert(data.answer)
+
+    })
+}
 function showId(id){
   document.getElementById(id).style.display="block"
 }
-
+async function sha512(message) {
+    // encode as UTF-8
+    const msgBuffer = new TextEncoder('utf-8').encode(message);
+    // hash the message
+    const hashBuffer = await crypto.subtle.digest('SHA-512', msgBuffer);
+    // convert ArrayBuffer to Array
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    // convert bytes to hex string
+    return hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+}
 function hideId(id){
 
   document.getElementById(id).style.display="none"
