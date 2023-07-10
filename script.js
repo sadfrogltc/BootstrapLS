@@ -44,6 +44,7 @@ function getIP() {
             IP = data.ip
             console.log(data)
             console.log("IP: "+ data.ip)
+            getUser()
             getOmniTrader()
         }
     })
@@ -52,20 +53,23 @@ function getIP() {
 //gets USER ACCOUNT with Login AUTHKEY - then calls getOmni()
 function getUser() {
     let url = API + 'user-get&authkey=' + AuthKey
+    document.getElementById("username-display").innerHTML = "<button class='btn btn-secondary' type='button' data-toggle='modal' data-target='#loginModal'>Login</button>"
+    document.getElementById("nav-art-tab").disabled=true
+    document.getElementById("nav-wallet-tab").disabled=true
+
     fetch(url).then((resp) => resp.json()).then(function(data){
         if (data.bool) {
             user = data
             console.log(data)
               document.getElementById("username-display").innerHTML = "<h5>"+user.User+"</h5>"
+              document.getElementById("nav-art-tab").disabled=false
+              document.getElementById("nav-wallet-tab").disabled=false
 
         }
         else {
 
 
               //if not logged in display changes:
-              document.getElementById("username-display").innerHTML = "<button class='btn btn-secondary' type='button' data-toggle='modal' data-target='#loginModal'>Login</button>"
-              document.getElementById("nav-art-tab").disabled=true
-              document.getElementById("nav-wallet-tab").disabled=true
 
 
 
@@ -353,6 +357,7 @@ function getOmniCollectionList(){
             document.getElementById('aud' + collection.propertyid).style.display = 'inline-block'
           }
           image.style.maxWidth = "150px"
+
           image.onerror = function(){this.style.display='none';}
           card.prepend(videoUser)
 //adds collection card to the display
@@ -599,6 +604,7 @@ function getOmniTrader(){
                                card.append(img)
                                card.append(video)
                                img.onerror = function(){this.style.display='none';}
+                               img.style.maxHeight = '350px'
                                card.append(header)
                                card.append(body)
                                card.append(button)
